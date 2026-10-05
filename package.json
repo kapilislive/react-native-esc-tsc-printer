@@ -51,14 +51,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kapil/react-native-esc-tsc-printer.git"
+    "url": "git+https://github.com/kapilislive/react-native-esc-tsc-printer.git"
   },
-  "author": "Kapil Whaval <whavalkapil@gmail.com> (https://github.com/kapil)",
+  "author": "Kapil Whaval <whavalkapil@gmail.com> (https://github.com/kapilislive)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kapil/react-native-esc-tsc-printer/issues"
+    "url": "https://github.com/kapilislive/react-native-esc-tsc-printer/issues"
   },
-  "homepage": "https://github.com/kapil/react-native-esc-tsc-printer#readme",
+  "homepage": "https://github.com/kapilislive/react-native-esc-tsc-printer#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
