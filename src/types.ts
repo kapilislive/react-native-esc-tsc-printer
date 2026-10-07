@@ -69,6 +69,8 @@ export type TscPrintLabelOptions = {
   home?: number;
   codepage?: string | number;
   encoding?: TextEncoding;
+  /** How many copies of this label to print. Defaults to 1. */
+  copies?: number;
   text?: TscTextElement[];
   qrcode?: TscQrCodeElement[];
   barcode?: TscBarcodeElement[];

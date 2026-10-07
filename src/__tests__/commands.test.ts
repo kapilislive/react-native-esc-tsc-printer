@@ -83,11 +83,21 @@ describe('TSPL text commands', () => {
     expect(script).toContain('CODEPAGE 1252\r\n');
     expect(script).toContain('QRCODE 20,96,L,3,A,0,M2,S1,"hello"\r\n');
     expect(script).toContain(
-      'BARCODE 120,96,"128",40,1,0,1,2,"1234567890"\r\n'
+      'BARCODE 120,96,"128",80,1,0,2,2,"1234567890"\r\n'
     );
     expect(script).toContain('REVERSE 0,0,10,10\r\n');
     expect(script.endsWith('SOUND 2,100\r\n')).toBe(true);
     expect(script).toContain('PRINT 1,1\r\n');
+  });
+
+  it('prints the requested number of copies', async () => {
+    const job = await buildTsplJob(
+      { width: 50, height: 30, copies: 4 },
+      [],
+      (value) => new TextEncoder().encode(value)
+    );
+
+    expect(new TextDecoder().decode(job)).toContain('PRINT 4,1\r\n');
   });
 });
 

@@ -13,6 +13,13 @@ function line(command: string): string {
   return `${command}\r\n`;
 }
 
+function clampCopies(value: number | undefined): number {
+  if (value == null || !Number.isFinite(value)) {
+    return 1;
+  }
+  return Math.min(999, Math.max(1, Math.round(value)));
+}
+
 function clampMul(value: number | undefined, fallback = 1): number {
   if (value == null || Number.isNaN(value)) {
     return fallback;
@@ -101,10 +108,11 @@ export function buildTsplScript(options: TscPrintLabelOptions): string {
     const x = barcode.x ?? 0;
     const y = barcode.y ?? 0;
     const type = barcode.type ?? '128';
-    const height = barcode.height ?? 40;
+    const height = barcode.height ?? 80;
     const readable = barcode.readable ?? 1;
     const rotation = barcode.rotation ?? 0;
-    const narrow = barcode.narrow ?? 1;
+    // One-dot bars do not mark thermal paper. TSC samples use a 2-dot module.
+    const narrow = barcode.narrow ?? 2;
     const wide = barcode.wide ?? 2;
     script += line(
       `BARCODE ${x},${y},"${type}",${height},${readable},${rotation},${narrow},${wide},"${escapeTspl(barcode.code)}"`
@@ -151,7 +159,9 @@ export async function buildTsplJob(
     parts.push(await encodeText('\r\n'));
   }
 
-  parts.push(await encodeText('PRINT 1,1\r\n'));
+  parts.push(
+    await encodeText(`PRINT ${clampCopies(options.copies)},1\r\n`)
+  );
   if (options.sound === 1) {
     parts.push(await encodeText('SOUND 2,100\r\n'));
   }
