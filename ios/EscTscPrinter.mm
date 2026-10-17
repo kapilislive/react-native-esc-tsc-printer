@@ -115,9 +115,8 @@ static const NSTimeInterval kWritePause = 0.02;
   [_central scanForPeripheralsWithServices:nil options:@{ CBCentralManagerScanOptionAllowDuplicatesKey: @NO }];
 
   NSTimeInterval timeout = MAX(timeoutMs / 1000.0, 1.0);
-  __weak typeof(self) weakSelf = self;
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    [weakSelf finishScan];
+    [self finishScan];
   });
 }
 
@@ -241,9 +240,8 @@ static const NSTimeInterval kWritePause = 0.02;
 
   [_peripheral writeValue:chunk forCharacteristic:_writeCharacteristic type:type];
   if (type == CBCharacteristicWriteWithoutResponse) {
-    __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kWritePause * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      [weakSelf flushChunks];
+      [self flushChunks];
     });
   }
 }
